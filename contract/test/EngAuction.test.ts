@@ -6,7 +6,6 @@ import { poseidonHash, getPoseidon } from "./helpers/poseidon-hash";
 import { VerifierHelper } from "../generated-types/contracts/EngAuction";
 import { SecretPair, generateSecrets, getCommitment, getZKP } from "./helpers/zkp-helper";
 import { EngAuction, MyToken, Groth16Verifier } from "../generated-types";
-import {add} from "@iden3/js-crypto/dist/types/ff/scalar";
 
 describe("Deployment", function () {
   //global vars
