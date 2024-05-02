@@ -15,7 +15,7 @@ function Launch() {
     const navigate = useNavigate();
 
     const { signer, provider, account, addressNFT, tokenID, depositAmount, setDepositAmount, balance, setBalance, auction, setAuction, participantAmount, setParticipantAmount } = useContext(UserContext);
-    const contractAddress = '0x61ad88019c1780138937FdC046af6BFffd426a2d';
+    const contractAddress = '0xC5ddBEdb3df8220b8fdA5500bDCc88074C0ba789';
     
     const Auction  = useMemo(() => {
         return signer
@@ -24,32 +24,6 @@ function Launch() {
     }, [signer])
 
     console.log("signer", signer);
-
-    // useEffect(() => {
-    //
-    //     const getBalance = async () => {
-    //       const balance = await provider.getBalance(contractAddress)
-    //       const balanceFormatted = ethers.formatEther(balance)
-    //       setBalance(balanceFormatted);
-    //     }
-    //
-    //     const getAuction = async () => {
-    //       // const auction = await contract.launchAuction(depositValue, 1711728000, '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266');
-    //       console.log(setAuction(auction));
-    //     }
-    //
-    //     getBalance()
-    //       .catch(console.error);
-    //
-    //     getAuction()
-    //       .catch(console.error);
-    //   }, [])
-    //
-    // const checkTheBalance = async () => {
-    //     const balance = await provider.getBalance(contractAddress)
-    //     const balanceFormatted = ethers.formatEther(balance)
-    //     setBalance(balanceFormatted);
-    // }
 
   const handleSuccess = () => {
     toast.success("Transaction successful!");
@@ -62,7 +36,7 @@ function Launch() {
   const handleLaunchAuction = async (e) => {
     e.preventDefault();
     try{
-      console.log(addressNFT, tokenID)
+      console.log(addressNFT, tokenID);
       const _addressNFT = await Auction.setAddressNFT(addressNFT, tokenID);
       await _addressNFT.wait();
       const ethDepAm = ethers.parseEther(depositAmount);

@@ -23,10 +23,6 @@ contract PoseidonSMT {
         return bytes32Tree.getRoot();
     }
 
-    function getNodeByKey(bytes32 key_) public view returns (SparseMerkleTree.Node memory) {
-        return bytes32Tree.getNodeByKey(key_);
-    }
-
     function _add(bytes32 element_) internal {
         bytes32 keyOfElement = _hash1(element_);
 

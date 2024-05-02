@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useContext, useMemo, useRef} from 'react';
 import { ethers } from "ethers";
 import abi from '../EngAuctionABI.json';
+import abi2 from '../MyToken.json';
 import { UserContext } from '../App';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFile, faUpload } from '@fortawesome/free-solid-svg-icons';
@@ -36,9 +37,9 @@ function Auction() {
             nullHash, setNullHash, balance, setBalance, transactionSuccess, setTransactionSuccess, auction, setAuction, siblings, setSiblings,
             root, setRoot, proof, setProof, maxBid, setmaxBid, maxNull, setmaxNull, storedBalance, storedMBid, storedMNull, storedDepAmount } = useContext(UserContext);
 
-    const contractAddress = "0x61ad88019c1780138937FdC046af6BFffd426a2d";
-    const contractToken = "0xF8E6B11c22fb7C40ee2C2E1f5330148fc1140D85";
-    const verifierAddress = "0x5Da96CE8C5e0248AcfE80a3F96f3a62c7FfAf9b2";
+    const contractAddress = "0xC5ddBEdb3df8220b8fdA5500bDCc88074C0ba789";
+    const contractToken = "0x2e422B8226DA6A04415E6F1E27215F524Fe0ad72";
+    const verifierAddress = "0x859FbDbbd747981Fb7084b7617ba2c5776e1a419";
 
     const Auction  = useMemo(() => {
         return signer
@@ -100,7 +101,9 @@ function Auction() {
 
       useEffect(() => {
         if (readyToWithdraw) {
+            checkOwner1();
             handleWithdrawDep().then(() => setReadyToWithdraw(false));
+            checkOwner2();
         }
       }, [readyToWithdraw])
 
@@ -187,7 +190,7 @@ function Auction() {
       console.log("Dn "+nullifier);
       console.log("Dcom "+commitment);
 
-      const depAm = "0.01";
+      const depAm = "0.1";
 
       setDepositAmount(storedDepAmount);
 
@@ -354,6 +357,17 @@ function Auction() {
       console.log("nh: "+zkProof.current.nullifierHash);
       setReadyToWithdraw(true);
   }
+
+    const Token  = useMemo(() => {
+        return signer
+            ? new ethers.Contract(contractToken, abi2, signer)
+            : null
+    }, [signer])
+
+  const checkOwner1 = async () => {
+      const owner = await Token.ownerOf(1);
+      console.log("owner before", owner);
+  }
   const handleWithdrawDep = async () => {
     try{
       const ethBid = ethers.parseEther("0");
@@ -378,6 +392,11 @@ function Auction() {
       console.error("Transaction failed:", error);
     }
   };
+
+    const checkOwner2 = async () => {
+        const owner = await Token.ownerOf(1);
+        console.log("owner after", owner);
+    }
 
   return (
     <div className='auction-container'>

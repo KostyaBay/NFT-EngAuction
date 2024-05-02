@@ -6,6 +6,7 @@ import { poseidonHash, getPoseidon } from "./helpers/poseidon-hash";
 import { VerifierHelper } from "../generated-types/contracts/EngAuction";
 import { SecretPair, generateSecrets, getCommitment, getZKP } from "./helpers/zkp-helper";
 import { EngAuction, MyToken, Groth16Verifier } from "../generated-types";
+import {add} from "@iden3/js-crypto/dist/types/ff/scalar";
 
 describe("Deployment", function () {
   //global vars
@@ -72,7 +73,14 @@ describe("Deployment", function () {
         expect(tokenID).to.equal(tokenId);
     });
 
-    it("Should launch the auction by the addr1 - error", async function () {
+   it("Check token contract before", async function () {
+     expect(await myToken.tokenURI(1)).to.equal("https://myduck/metadata/");
+     console.log("uri ", await myToken.tokenURI(1));
+     expect(await myToken.ownerOf(1)).to.equal(OWNER_add);
+     console.log("ownerOf ", await myToken.ownerOf(1));
+   });
+
+  it("Should launch the auction by the addr1 - error", async function () {
 
       const depAmount = "50"; // Set your desired deposit amount here
       const ethDepAm = ethers.parseEther(depAmount);
@@ -90,7 +98,7 @@ describe("Deployment", function () {
         const auctionDuration = 10 * 60; // 5 minutes
         const participantAmount = "2";
 
-        console.log("--token address: "+ await myToken.getAddress());
+        // console.log("--token address: "+ await myToken.getAddress());
         await engAuction.setAddressNFT(await myToken.getAddress(), 1);
 
         await engAuction.launchAuction(ethDepAm, (await time.latest()) + auctionDuration, OWNER_add, participantAmount);
@@ -101,7 +109,7 @@ describe("Deployment", function () {
         const depAmountAu = result[2]; 
         const endAtAu = result[3];
 
-        console.log("Timestamp: "+(await time.latest() + auctionDuration));
+        // console.log("Timestamp: "+(await time.latest() + auctionDuration));
 
         // Assert auction status
         expect(statusAu).to.be.true;
@@ -123,7 +131,7 @@ describe("Deployment", function () {
 
       console.log("deposit: "+depositEth);
       pair = generateSecrets();
-      console.log("pair1: ", pair.secret, "pair2: ", pair.nullifier);
+      console.log("pair1.1: ", pair.secret, "pair1.2: ", pair.nullifier);
       commitment = getCommitment(pair);
       console.log("com: ", commitment);
   
@@ -134,12 +142,9 @@ describe("Deployment", function () {
       await expect(engAuction.connect(owner).deposit(commitment, { value: depositEth }))
         .to.emit(engAuction, "Deposit")
         .withArgs();
-  
-      root = (await engAuction.connect(owner).getRoot()).toString();
-      console.log("root of owner: "+root);
 
       const newBalance = await ethers.provider.getBalance(OWNER_add);
-      console.log("New balance of owner's money: " + newBalance);
+      // console.log("New balance of owner's money: " + newBalance);
 
       // Assert that the deposit was successful
       const isDepositLocked = await engAuction.lockedDep(commitment);
@@ -153,7 +158,7 @@ describe("Deployment", function () {
 
       console.log("deposit: "+depositEth);
       pair2 = generateSecrets();
-      console.log("pair1: ", pair2.secret, "pair2: ", pair2.nullifier);
+      console.log("pair2.1: ", pair2.secret, "pair2.2: ", pair2.nullifier);
       commitment2 = getCommitment(pair2);
       console.log("com2: ", commitment2);
 
@@ -174,27 +179,39 @@ describe("Deployment", function () {
 
       const bid = "5";
       const ethBid = ethers.parseEther(bid);
+      console.log(commitment);
       const key = poseidonHash(commitment);
       const onchainProof = await engAuction.connect(owner).getProof(key);
-      
+
+      // console.log("onchain ", onchainProof);
+      console.log("Proof\npair: ", pair);
+      console.log("root: ", root);
+      console.log("ownerAdd: ", OWNER_add);
+      // console.log("siblings: ", onchainProof.siblings);
+
+      root = (await engAuction.connect(owner).getRoot()).toString();
+      console.log("root of owner: "+root);
+
       zkProof = await getZKP(
-        pair,
-        root, 
-        ethBid.toString(), 
-        OWNER_add,
-        onchainProof.siblings
+          pair,
+          root,
+          ethBid.toString(),
+          OWNER_add,
+          onchainProof.siblings
       );
 
-      console.log("zkProof1: ", zkProof);
+      // console.log("zkProof ", zkProof);
+
+      // console.log("zkProof1: ", zkProof.formattedProof);
       console.log("zkNH: ", zkProof.nullifierHash);
       console.log("root: ", root);
-      console.log("zkProof2: ", zkProof.formattedProof);
+      // console.log("zkProof2: ", zkProof.formattedProof);
 
       // Perform placing a bid
       await expect(engAuction.connect(owner).placeBid(OWNER_add, ethBid, zkProof.nullifierHash, root, G16V_add, zkProof.formattedProof))
         .to.emit(engAuction, "Bid")
         .withArgs(ethBid, zkProof.nullifierHash);
-  
+
       console.log("Successfully!");
 
       // Assert that the bid was placed successfully
@@ -211,6 +228,15 @@ describe("Deployment", function () {
       const key = poseidonHash(commitment);
       const onchainProof = await engAuction.connect(owner).getProof(key);
 
+      // console.log("onchain ", onchainProof);
+      console.log("Proof\npair: ", pair);
+      console.log("root: ", root);
+      console.log("ownerAdd: ", OWNER_add);
+      // console.log("siblings: ", onchainProof.siblings);
+
+      root = (await engAuction.connect(owner).getRoot()).toString();
+      console.log("root of owner: "+root);
+
       zkProof = await getZKP(
           pair,
           root,
@@ -219,8 +245,7 @@ describe("Deployment", function () {
           onchainProof.siblings
       );
 
-      console.log("zkProof: "+zkProof.formattedProof);
-      console.log("root"+root);
+      // console.log("zkProof ", zkProof);
 
       // Perform placing a bid
       await expect(engAuction.connect(owner).placeBid(OWNER_add, ethBid, zkProof.nullifierHash, root, G16V_add, zkProof.formattedProof))
@@ -229,7 +254,7 @@ describe("Deployment", function () {
 
       console.log("nullH: "+zkProof.nullifierHash);
       console.log("root of owner: "+root);
-      console.log("proof: "+zkProof);
+      // console.log("proof: "+zkProof);
   
       // Assert that the bid was placed successfully
       const isBidPlaced = await engAuction.connect(owner).maxBid();
@@ -240,10 +265,19 @@ describe("Deployment", function () {
 
     it("Should place a bid, address1!", async function () {
 
-      const bid = "11";
+      const bid = "50";
       const ethBid = ethers.parseEther(bid);
       const key = poseidonHash(commitment2);
       const onchainProof = await engAuction.connect(addr1).getProof(key);
+
+      // console.log("onchain ", onchainProof);
+      console.log("Proof\npair: ", pair2);
+      console.log("root2: ", root2);
+      console.log("add1_Add: ", ADDR1_add);
+      // console.log("siblings: ", onchainProof.siblings);
+
+      root2 = (await engAuction.connect(addr1).getRoot()).toString();
+      console.log("root of addr1: "+root2);
 
       zkProof2 = await getZKP(
           pair2,
@@ -253,10 +287,11 @@ describe("Deployment", function () {
           onchainProof.siblings
       );
 
-      console.log("zkProof2: ", zkProof2);
+      // console.log("zkProof2 ", zkProof2);
+
       console.log("zkNH: ", zkProof2.nullifierHash);
       console.log("root: ", root2);
-      console.log("zkProof22: ", zkProof2.formattedProof);
+      // console.log("zkProof22: ", zkProof2.formattedProof);
   
       // Perform placing a bid
       await expect(engAuction.connect(addr1).placeBid(ADDR1_add, ethBid, zkProof2.nullifierHash, root2, G16V_add, zkProof2.formattedProof))
@@ -273,11 +308,20 @@ describe("Deployment", function () {
 
     it("Should withdraw the deposit, owner", async function () {
 
-      const bid = "10";
+      const bid = "0";
       const ethBid = ethers.parseEther(bid); // Set the bid amount in ether
 
       const key = poseidonHash(commitment);
       const onchainProof = await engAuction.connect(owner).getProof(key);
+
+      // console.log("onchain ", onchainProof);
+      console.log("Proof\npair: ", pair);
+      console.log("root: ", root);
+      console.log("ownerAdd: ", OWNER_add);
+      // console.log("siblings: ", onchainProof.siblings);
+
+      root = (await engAuction.connect(owner).getRoot()).toString();
+      console.log("root of owner: "+root);
 
       zkProof = await getZKP(
           pair,
@@ -286,6 +330,8 @@ describe("Deployment", function () {
           OWNER_add,
           onchainProof.siblings
       );
+
+      // console.log("zkProof ", zkProof);
 
       const oldBalance = await ethers.provider.getBalance(OWNER_add);
       console.log("Balance of owner's money: " + oldBalance);
@@ -299,7 +345,7 @@ describe("Deployment", function () {
       console.log("add of w: "+OWNER_add);
       console.log("nullH: "+nullifierHash);
       console.log("root of owner: "+root);
-      console.log("proof: "+zkProof);
+      // console.log("proof: "+zkProof);
 
       // Simulate withdrawing deposit
       await expect(engAuction.connect(owner).withdrawDep(OWNER_add, OWNER_add, zkProof.nullifierHash, root, ethBid, G16V_add, zkProof.formattedProof))
@@ -314,6 +360,55 @@ describe("Deployment", function () {
       const isDepositEmpty = await engAuction.connect(owner).emptyDep(zkProof.nullifierHash);
       expect(isDepositEmpty).to.be.true;
     });
-    
 
+  it("Should withdraw the deposit, address1", async function () {
+
+    const bid = "0";
+    const ethBid = ethers.parseEther(bid); // Set the bid amount in ether
+
+    const key = poseidonHash(commitment2);
+    const onchainProof = await engAuction.connect(addr1).getProof(key);
+
+    zkProof2 = await getZKP(
+        pair2,
+        root2,
+        ethBid.toString(),
+        ADDR1_add,
+        onchainProof.siblings
+    );
+
+    const oldBalance = await ethers.provider.getBalance(ADDR1_add);
+    console.log("Balance of owner's money: " + oldBalance);
+    console.log("Balance of owner's token: " + await myToken.balanceOf(ADDR1_add));
+
+    const maxNull = (await engAuction.connect(addr1).maxNullifier());
+    const maxBid = (await engAuction.connect(addr1).maxBid());
+    console.log("maxNull: ", maxNull);
+    console.log("maxBid: ", maxBid);
+
+    console.log("add of w: ", ADDR1_add);
+    console.log("nullH: ", zkProof2.nullifierHash);
+    console.log("root of owner: ", root2);
+    // console.log("proof: ", zkProof);
+
+    // Simulate withdrawing deposit
+    await expect(engAuction.connect(addr1).withdrawDep(ADDR1_add, ADDR1_add, zkProof2.nullifierHash, root2, ethBid, G16V_add, zkProof2.formattedProof))
+        .to.emit(engAuction, "Withdraw")
+        .withArgs(maxBid, maxNull);
+
+    const balance = await ethers.provider.getBalance(ADDR1_add);
+    console.log("Balance of owner's money: " + balance);
+    console.log("Balance of owner's token: " + await myToken.balanceOf(ADDR1_add));
+
+    // Assert that the deposit was withdrawn successfully
+    const isDepositEmpty = await engAuction.connect(addr1).emptyDep(zkProof2.nullifierHash);
+    expect(isDepositEmpty).to.be.true;
+  });
+
+    it("Check token contract after", async function () {
+      expect(await myToken.tokenURI(1)).to.equal("https://myduck/metadata/");
+      console.log("uri ", await myToken.tokenURI(1));
+      expect(await myToken.ownerOf(1)).to.equal(ADDR1_add);
+      console.log("ownerOf ", await myToken.ownerOf(1));
+    });
 });

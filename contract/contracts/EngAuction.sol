@@ -216,7 +216,4 @@ contract EngAuction is PoseidonSMT, Initializable{
 
     // * receive function
     receive() external payable {}
-
-    // * fallback function
-    fallback() external payable {}
 }

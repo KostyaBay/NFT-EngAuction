@@ -8,7 +8,7 @@ dotenv.config();
 function privateKey() {
   return process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [];
 }
-console.log(privateKey());
+
 const config: HardhatUserConfig = {
   solidity: "0.8.20",
   networks: {

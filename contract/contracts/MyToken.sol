@@ -21,17 +21,8 @@ contract MyToken is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
     public
     onlyOwner
     {
-        require(tokenId <= 3, "Token ID must be 3");
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
-    }
-
-    function getBalance(address owner) public view returns (uint256) {
-        return ERC721.balanceOf(owner);
-    }
-
-    function getOwner(uint256 tokenId) public view returns (address) {
-        return ERC721.ownerOf(tokenId);
     }
 
     // The following functions are overrides required by Solidity.
