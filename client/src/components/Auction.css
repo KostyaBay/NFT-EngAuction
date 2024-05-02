@@ -1,0 +1,279 @@
+.auction-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300vh;
+}
+
+.auction-info{
+  margin-bottom: 2rem;
+}
+
+.auction-proof-upload{
+  width: 450px; /* Задаємо ширину поля для введення */
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 18px;
+  margin-bottom: 10px;
+  margin: 0 auto 10px; /* Центруємо поле для введення та встановлюємо нижній маргін */
+  display: block; /* Зробити поле для введення блоковим елементом */ 
+  text-align: center;
+
+  background-color: #ffffff;
+}
+
+.titleCloseBtn1 {
+  display: flex;
+  justify-content: flex-end;
+}
+.titleCloseBtn1 {
+  display: flex;
+  flex-direction: column;
+  position: relative; /* Додано для позиціонування кнопки remove */
+}
+
+.titleCloseBtn1 button {
+  position: absolute; /* Додано для позиціонування кнопки remove */
+  top: 0; /* Розміщення зверху */
+  right: 0; /* Розміщення справа */
+  background-color: transparent;
+  border: none;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.info-message-proof{
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.auction-button2 {
+  background-color: #007bff;
+  color: #fff;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 10px;
+  padding: 0.85rem 9.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 1rem;
+  margin-bottom: 2rem;
+  
+  margin: 0 auto 0.5rem; /* Встановлюємо верхній та нижній маргін на автоматичне значення, а лівий та правий - 0 */
+  display: block; /* Зробити кнопку блоковим елементом */
+  text-align: center; /* Вирівняти текст по центру */
+}
+
+ .auction-button1{
+  background-color: #007bff;
+  color: #fff;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 10px;
+  padding: 0.85rem 8rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 1rem;
+  margin-bottom: 2rem;
+  
+  margin: 0 auto 0.5rem; /* Встановлюємо верхній та нижній маргін на автоматичне значення, а лівий та правий - 0 */
+  display: block; /* Зробити кнопку блоковим елементом */
+  text-align: center; /* Вирівняти текст по центру */
+}
+
+.auction-button3 {
+  background-color: #007bff;
+  color: #fff;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 10px;
+  padding: 0.9rem 7rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 1rem;
+  margin-bottom: 2rem;
+  
+  margin: 0 auto 0.5rem; /* Встановлюємо верхній та нижній маргін на автоматичне значення, а лівий та правий - 0 */
+  display: block; /* Зробити кнопку блоковим елементом */
+  text-align: center; /* Вирівняти текст по центру */
+}
+
+.auction-button1:hover,
+.auction-button2:hover, 
+.auction-button3:hover {
+  background-color: #0069d9;
+}
+
+.auction-container1 {
+  display: flex;
+  flex-direction: column;
+  align-items: right;
+  justify-content: center;
+  /* border: 1px solid #ffffff !important; */
+  border-radius: 0.5rem;
+  padding: 2rem; /* Додатковий відступ всередині контейнера */
+}
+
+.openModalBtn{
+  background-color: #007bff;
+  color: #fff;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 10px;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 1rem;
+  margin-bottom: 2rem;
+  
+  margin: 0 auto 0.5rem; /* Встановлюємо верхній та нижній маргін на автоматичне значення, а лівий та правий - 0 */
+  display: block; /* Зробити кнопку блоковим елементом */
+  text-align: center; /* Вирівняти текст по центру */
+}
+
+.openModalBtn:hover{
+  background-color: #0069d9;
+}
+
+.modal-dialog {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* height: 100vh; */
+    margin: 0; /* Видаляє зовнішні відступи */
+    padding: 0; /* Видаляє внутрішні відступи */
+    overflow: auto; /* Дозволяє прокрутку, якщо контент виходить за межі вікна */
+  }
+
+.modal-content {
+    /* width: 60%; */
+    /* background-color: #fff; */
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    text-align: center; 
+    /* Відцентруйте текст по горизонталі */
+}
+  
+  .modal-header {
+    padding: 1rem;
+    border-bottom: 1px solid #dee2e6;
+  }
+  
+  .modal-title {
+    margin-bottom: 0;
+    line-height: 1.5;
+  }
+  
+  .modal-body {
+    position: relative;
+    flex: 1 1 auto;
+    padding: 1rem;
+  }
+  
+  .modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0.75rem;
+    border-top: 1px solid #dee2e6;
+  }
+  
+  /* Button */
+  .btn-primary, .btn-secondary {
+    background-color: #007bff;
+    color: #fff;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 0.3rem;
+    padding: 1rem 2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 2rem;
+    /* margin: 0 10px; */
+  
+    margin: 0 auto 1rem; 
+    /* Встановлюємо верхній та нижній маргін на автоматичне значення, а лівий та правий - 0 */
+      display: block; /* Зробити кнопку блоковим елементом */
+      text-align: center; 
+  }
+  
+  .btn-primary:hover, .btn-secondary:hover {
+    background-color: #0056b3;
+  }
+  
+  .btn-primary:focus, .btn-primary.focus, 
+  .btn-secondary:focus, .btn-secondary.focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+  }
+
+  .bid-field {
+    width: 400px; /* Задаємо ширину поля для введення */
+    padding: 0.75rem 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-size: 18px;
+    margin-bottom: 10px;
+    margin: 0 auto 10px; /* Центруємо поле для введення та встановлюємо нижній маргін */
+    display: block; /* Зробити поле для введення блоковим елементом */
+  }
+
+  .table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 800px; 
+    /* Налаштуйте максимальну ширину таблиці за потреби */
+    margin: 0 auto; /* Центруємо таблицю на сторінці */
+  }
+  
+  .table th,
+  .table td {
+    padding: 13px;
+    text-align: center;
+    border-bottom: 1px solid #ddd; /* Горизонтальні лінії розділення між рядками */
+    background-color: #ffffff;
+  }
+  
+  .table th {
+    background-color: #f2f2f2; /* Колір фону заголовків */
+  }
+  
+  .table tbody tr:last-child td {
+    border-bottom: none; /* Видаляємо лінію розділення в останньому рядку */
+  }
+  
+  /* Закруглені кути */
+  .table {
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .table th:first-child,
+  .table td:first-child {
+    border-top-left-radius: 10px;
+  }
+  
+  .table th:last-child,
+  .table td:last-child {
+    border-top-right-radius: 10px;
+  }
+  
+  /* Приклади стилізації для рядків, колонок або елементів таблиці */
+  .table tbody tr:hover {
+    background-color: #f5f5f5; /* Колір фону при наведенні */
+  }
+  
+  .table tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* Колір фону парних рядків */
+  }
+  
+  .table tbody tr:hover td {
+    color: #000000; /* Колір тексту при наведенні */
+  }
+  

@@ -1,0 +1,234 @@
+  body {
+    background-color: rgb(244, 244, 244); /* Колір фону */
+    background-image: radial-gradient(white, skyblue); /* Градієнт, якщо потрібно
+    background-size: cover; /* Змінюємо розмір фону, щоб він відповідав розміру сторінки */
+    background-position: center; /* Розміщуємо фон по центру */
+  }
+
+  .login-container {
+      display: flex;
+      flex-direction: column;
+      /*align-items: flex-end;*/
+      justify-content: center;
+      height: 100vh;
+    }
+    
+    .login-content {
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo-container {
+      flex: 1;
+    }
+    
+    .text-container {
+      flex: 2;
+      /* background-color: rgba(255, 255, 255, 0.1);  Розмитий фон */
+      padding: 20px;
+      border-radius: 5px;
+    }
+    
+    .login-logo {
+      position: absolute;
+      left: 250px;
+      bottom: 0px; /* Розмістити картинку на 20 пікселів від нижнього краю */
+      height: 700px; /* Половина висоти контейнера */
+      width: 600px; /* Половина ширини контейнера */
+    }
+    
+    .welcome-message1 {
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .welcome-message2 {
+      font-size: 3rem;
+      text-align: center;
+      margin-bottom: 1rem;
+      color: darkblue;
+    }
+
+    .welcome-message3 {
+      font-size: 3rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      color: darkblue;
+    }
+
+    .login-button {
+      background-color: #007bff;
+      color: #fff;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 0.3rem;
+      padding: 1rem 2rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      margin: 0 auto 2rem; /* Встановлюємо верхній та нижній маргін на автоматичне значення, а лівий та правий - 0 */
+      display: block; /* Зробити кнопку блоковим елементом */
+      text-align: center; /* Вирівняти текст по центру */
+    }
+  
+  .login-button:hover {
+    background-color: #0069d9;
+  }
+  
+  .signer {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: darkblue;
+  }
+
+  .connected-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  .connected-header {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .connected-account {
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  /* .button-connected-container {
+    display: flex;
+    justify-content: space-between; /* Розподілити простір між елементами контейнера 
+    max-width: 600px; /* Нехай контейнер буде максимум 400px в ширину 
+    margin: 0 auto; /* Центрувати контейнер по горизонталі 
+  } */
+
+  .connected-button1, .connected-button2 {
+    background-color: #007bff;
+    color: #fff;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 0.3rem;
+    padding: 1rem 2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 2rem;
+
+    margin: 0 10px;
+  }
+  
+  .connected-button1:hover,
+  .connected-button2:hover {
+    background-color: #0069d9;
+  }
+
+  .create-container,
+  .join-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+
+  .create-message,
+  .join-message {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .create-button,
+  .join-button,
+  .launch-button {
+    background-color: #007bff;
+    color: #fff;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 0.3rem;
+    padding: 1rem 3rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: 1rem;
+    margin-bottom: 2rem;
+    
+    margin: 0 auto 2rem; /* Встановлюємо верхній та нижній маргін на автоматичне значення, а лівий та правий - 0 */
+    display: block; /* Зробити кнопку блоковим елементом */
+    text-align: center; /* Вирівняти текст по центру */
+  }
+  
+  .create-button:hover,
+  .join-button:hover,
+  .launch-button:hover {
+    background-color: #0069d9;
+  }
+
+  .info-message1{
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .addressName,
+  .tokenName,
+  .balance {
+    font-size: 1rem;
+    text-align: left;
+    margin-bottom: 1rem;
+  }
+
+  .launch-container {
+    display: flex;
+    flex-direction: column;
+    /*align-items: right;*/
+    justify-content: center;
+    border: 1px solid #ffffff !important;
+    border-radius: 0.5rem;
+    padding: 2rem; /* Додатковий відступ всередині контейнера */
+    height: 50vh;
+}
+
+  /* .connected-contract-address {
+    font-size: 1.2rem;
+    text-align: center;
+  } */
+  
+  
+  /* .candidates-table {
+    border-collapse: collapse;
+    width: 50%;
+    text-align:center;
+  }
+  
+  .candidates-table th, .candidates-table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .candidates-table th {
+    background-color: #f2f2f2;
+  } */
+
+  input[type=address],
+  input[type=number],
+  input[type=text] {
+    width: 450px; /* Задаємо ширину поля для введення */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 18px;
+    margin-bottom: 10px;
+    margin: 0 auto 10px; /* Центруємо поле для введення та встановлюємо нижній маргін */
+    display: block; /* Зробити поле для введення блоковим елементом */
+  }
+
+  
